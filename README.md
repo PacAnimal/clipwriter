@@ -14,6 +14,11 @@ A PowerShell script that writes your current clipboard content (text or files) a
 * Copying large amounts of text and long scripts that would otherwise take ages to type in
 * Copying multiple files and directories
 
+## How it works
+ClipWriter uses the SendWait function from the System.Windows.Forms library to generate synthetic keystrokes. It uses SendWait() in favour of alternative calls such as SendKeys() in attempt to avoid mistakes when writing large amounts of text to slow applications. SendWait() is slower than SendKeys(), but also more accurate.
+
+To paste files, ClipWriter generates PowerShell commands to create the required directory structure, and it transfers the files themselves by Base64-encoding them in chunks and generating commands to decode the chunks on the remote side.
+
 ## Issues
 * Speed, obviously. Copying large files is time consuming, but if the alternative is to run through several hours of meetings about firewall rules and security issues, this might be quicker after all.
 * The computer that's doing the "typing" is pretty much unusable while the script runs. You can watch Youtube on a separate screen though :D
